@@ -1,2 +1,97 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace thread_count
+{
+    class Program
+    { /*
+      Напишите программу, которая решает описанную в Вашем варианте задачу сначала на одном ядре процессора, 
+      а затем на двух ядрах процессора. В каждом случае необходимо находить время решения задачи без учета 
+      считывания данных из файла. Найдите коэффициент ускорения. Разбиение задачи на две подзадачи выполните 
+      простым разделением массива на две части. Во всех заданиях на вход программе подается имя файла, в первой 
+      строке которого записан размер массива, а во второй строке записаны элементы целочисленного массива. 
+      Количество элементов должно быть не менее 1000. Файл с исходными данными сгенерируйте самостоятельно.
+      Варианты заданий
+      9. Реализуйте программу подсчета количества элементов массива, не превышающих заданное значение.*/
+
+        static int[] arr = new int[1000];
+        static int[] arr_from_file = new int[arr.Length];
+        static int number_N_from_file = 0;
+        static int cnt_stream1,cnt_stream2 = 0;
+        static int cnt_if_min1,cnt_if_min2 = 0;
+        static Stopwatch stopwatch1 = new Stopwatch();
+        static Stopwatch stopwatch2 = new Stopwatch();
+        static void Main(string[] args)
+        {
+            //File.Create("array.txt");
+            int number_N = 0; //<=
+            Console.Write("Введите максимальное число от 1 до 100: ");
+            number_N = Convert.ToInt32(Console.ReadLine());
+            string number_value = "";
+            Random randNum = new Random();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = randNum.Next(0, 100);
+                number_value += arr[i] + " ";
+            }
+            File.WriteAllText("array.txt", number_N.ToString()+ "\r\n" + number_value.Trim());
+            string [] text_from_txt = File.ReadAllLines("array.txt");
+            number_N_from_file = Convert.ToInt32(text_from_txt[0]);
+            string[] arrstr_from_file = text_from_txt[1].Split(' ');
+            arr_from_file = Array.ConvertAll(arrstr_from_file, int.Parse);
+
+            Console.WriteLine("------------");
+            //
+
+            // создаем новый поток
+            Thread myThread = new Thread(cnt_number);
+            myThread.Start(); // запускаем поток
+            
+            stopwatch1.Start();
+            for (int i = 0; i < arr_from_file.Length/2; i++)
+            {
+                cnt_stream1++;
+                if (arr_from_file[i] <= number_N_from_file)
+                    cnt_if_min1++;
+                Console.WriteLine("Поток1 - "+ cnt_stream1);
+            }
+            Console.WriteLine("End 1");
+            stopwatch1.Stop();
+            //TimeSpan stopwatchElapsed = stopwatch1.Elapsed;
+            Console.WriteLine("Первый поток выполнился за "+ Convert.ToDouble(stopwatch1.ElapsedMilliseconds) + " миллисекунд");
+            Console.WriteLine("В первом потоке "+ cnt_if_min1 + " чисел меньше или равно " + number_N_from_file);
+            myThread.Join(); //ждёт пока поток myThread завершится
+            double coeff = Convert.ToDouble(stopwatch1.ElapsedMilliseconds) / Convert.ToDouble(stopwatch2.ElapsedMilliseconds);
+            Console.WriteLine("Коэффициент ускорения = "+ coeff); //Коэффициент ускорения = time1 / time2
+            Console.WriteLine("Всё выполнилось!");
+            Console.ReadLine();
+        }
+
+        public static void cnt_number()
+        {
+            stopwatch2.Start();
+            for (int i = arr_from_file.Length / 2; i < arr_from_file.Length; i++)
+            {
+                cnt_stream2++;
+                if (arr_from_file[i] <= number_N_from_file)
+                    cnt_if_min2++;
+                Console.WriteLine("Поток2 - "+cnt_stream2);
+            }
+            Console.WriteLine("End 2");
+            stopwatch2.Stop();
+            //TimeSpan stopwatchElapsed = stopwatch2.Elapsed;
+            Console.WriteLine("Второй поток выполнился за " + Convert.ToDouble(stopwatch2.ElapsedMilliseconds) + " миллисекунд");
+            Console.WriteLine("Во втором потоке " + cnt_if_min2 + " чисел меньше или равно " + number_N_from_file);
+        }
+    }
+}
+
+
+//ИЗМЕНЕНИЯ ДЛЯ ВЕТКИ 2
+//ПРОБА
