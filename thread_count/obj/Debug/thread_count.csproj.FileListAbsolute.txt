@@ -1,0 +1,14 @@
+C:\Users\aleks\source\repos\thread_count\bin\Debug\thread_count.exe.config
+C:\Users\aleks\source\repos\thread_count\bin\Debug\thread_count.exe
+C:\Users\aleks\source\repos\thread_count\bin\Debug\thread_count.pdb
+C:\Users\aleks\source\repos\thread_count\obj\Debug\thread_count.csprojAssemblyReference.cache
+C:\Users\aleks\source\repos\thread_count\obj\Debug\thread_count.csproj.CoreCompileInputs.cache
+C:\Users\aleks\source\repos\thread_count\obj\Debug\thread_count.exe
+C:\Users\aleks\source\repos\thread_count\obj\Debug\thread_count.pdb
+C:\Users\ЛисяКися\Desktop\thread_count\bin\Debug\thread_count.exe.config
+C:\Users\ЛисяКися\Desktop\thread_count\bin\Debug\thread_count.exe
+C:\Users\ЛисяКися\Desktop\thread_count\bin\Debug\thread_count.pdb
+C:\Users\ЛисяКися\Desktop\thread_count\obj\Debug\thread_count.csproj.AssemblyReference.cache
+C:\Users\ЛисяКися\Desktop\thread_count\obj\Debug\thread_count.csproj.CoreCompileInputs.cache
+C:\Users\ЛисяКися\Desktop\thread_count\obj\Debug\thread_count.exe
+C:\Users\ЛисяКися\Desktop\thread_count\obj\Debug\thread_count.pdb
